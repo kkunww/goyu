@@ -2,18 +2,351 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>고유</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    @font-face {
+      font-family: 'Playfair';
+      src: url('./fonts/PlayfairDisplay-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #000000;
+      color: #fafafa;
+      font-size: 12px;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      padding-top: 20px;
+      box-sizing: border-box;
+      position: relative;
+      cursor: default;
+    }
+
+    .content-container {
+      width: 320px;
+      text-align: left;
+      user-select: text;
+      position: relative;
+      z-index: 2;
+    }
+
+    .content-container span {
+      cursor: pointer;
+      background-color: transparent;
+      transition: background-color 1s ease, font-weight 0.7s ease 0.3s;
+      user-select: text;
+      border-radius: 0;
+      display: inline-block;
+      padding: 2px 6px;
+      font-weight: normal;
+    }
+
+    .content-container span:hover {
+      background-color: #D929CD;
+      color: #fafafa;
+      font-weight: bold;
+    }
+
+    .intro-single {
+      margin-bottom: 30px;
+      font-weight: normal;
+      color: #fafafa;
+    }
+
+    .intro-list {
+      margin-bottom: 30px;
+      cursor: pointer;
+    }
+
+    .intro-list p {
+      margin: 8px 0;
+      white-space: pre-line;
+      display: inline;
+      background-color: transparent;
+      transition: background-color 1s ease, font-weight 0.7s ease 0.3s;
+      user-select: text;
+      border-radius: 0;
+      padding: 0;
+      font-weight: normal;
+      font-family: 'Playfair', serif;
+    }
+
+    .intro-list p:hover {
+      background-color: #D929CD;
+      color: #fafafa;
+      font-weight: bold;
+    }
+
+    .extra-intro {
+      margin-bottom: 30px;
+      cursor: pointer;
+    }
+
+    .extra-intro p {
+      margin: 4px 0;
+      display: inline;
+      background-color: transparent;
+      transition: background-color 1s ease, font-weight 0.2s ease 0.1s;
+      user-select: text;
+      border-radius: 0;
+      padding: 0;
+      font-weight: normal;
+      font-family: 'Playfair', serif;
+    }
+
+    .extra-intro p:hover {
+      background-color: #D929CD;
+      color: #fafafa;
+      font-weight: bold;
+    }
+
+    .top-numbers {
+      display: flex;
+      gap: 6px;
+      font-weight: normal;
+      margin-bottom: 10px;
+      justify-content: flex-start;
+    }
+
+    .image-box {
+      width: 90px;
+      height: 30px;
+      border: 1px solid #D929CD;
+      margin-top: 10px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
 </head>
-<body>
-  <div class="container" onclick="playClickSound()">
-    <p class="intro">
-      1<br />
-      22
-    </p>
+<body onclick="handleBodyClick()">
+  <canvas id="snow-canvas"></canvas>
+  <div class="content-container" onclick="event.stopPropagation()">
+    <div class="top-numbers">
+      <span onclick="playClickSound()">✖</span>
+      <span onclick="playClickSound()">✖</span>
+      <span onclick="playClickSound()">✖</span>
+      <span onclick="playClickSound()">= ω =</span>
+    </div>
+    <div class="intro-single">
+      뜬금없지만여러분태어나줘서고마워요
+    </div>
+    <div class="intro-list" id="intro-list">
+      <p id="p1" onclick="showIntro(1)">Cherish (my Love)</p><br />
+      <p id="p2" onclick="showIntro(2)">identity v</p><br />
+      <p id="p3" onclick="showIntro(3)">sweetener</p><br />
+      <p id="p4" onclick="showIntro(4)">do the dance (doomchitmeow)</p>
+    </div>
+    <div class="extra-intro" onclick="playClickSound()">
+      <p>-->>twitter</p>
+    </div>
+    <div class="extra-intro">
+      <p>
+        <a href="https://x.com/gokwntt" target="_blank" onclick="playClickSound()">@gokwntt</a>
+      </p>
+    </div>
+    <div class="image-box" onclick="playClickSound()">
+      <img src="./images/a.png" alt="Adobe Express" />
+    </div>
   </div>
-  <audio id="clickSound" src="click.mp3"></audio>
-  <script src="script.js"></script>
+  <script>
+    const click = new Audio('click.mp3');
+    click.preload = 'auto';
+
+    function playClickSound() {
+      const sound = click.cloneNode();
+      sound.play();
+    }
+
+    const originalTexts = {
+      1: 'Cherish (my Love)',
+      2: 'identity v',
+      3: 'sweetener',
+      4: 'do the dance (doomchitmeow)'
+    };
+
+    const introDetailTexts = {
+      1: ['아일릿 원희 +@ 여자연예인', '이안, 유스피어 로아', 'ARIANAGRANDE olivia rodrigo taylor swift', 'wicked: glinda, elphaba'],
+      2: ['31198902', '제5인격 언급 多', '의지 등 커스텀 게임 위주', '+ 단간론파, 스듀, 마크, 리썰 등'],
+      3: ['supernatural', 'https://youtu.be/hKwizc5nsWY?si=Mwiz7-p1Z3BzaxXG', 'Die For You', 'https://youtu.be/YQ-qToZUybM?si=kTgu-iQtzZ1gFjVZ'],
+      4: ['x', '여돌 까글', '남트친 남자 야구주력', ' ']
+    };
+
+    let isIntroDetailShown = false;
+
+    function showIntro(num) {
+      playClickSound();
+      const introList = document.getElementById('intro-list');
+      introList.innerHTML = '';
+
+      introDetailTexts[num].forEach((text, i) => {
+        const p = document.createElement('p');
+        p.innerText = text;
+        p.style.display = 'inline';
+        p.onclick = handleBodyClick;
+        introList.appendChild(p);
+
+        if (i < introDetailTexts[num].length - 1) {
+          introList.appendChild(document.createElement('br'));
+        }
+      });
+
+      isIntroDetailShown = true;
+
+      if (num === 4) {
+        document.querySelector('.image-box img').src = './images/b.png';
+      }
+    }
+
+    function handleBodyClick() {
+      if (isIntroDetailShown) {
+        const introList = document.getElementById('intro-list');
+        introList.innerHTML = '';
+        for (let i = 1; i <= 4; i++) {
+          const p = document.createElement('p');
+          p.id = 'p' + i;
+          p.innerText = originalTexts[i];
+          p.style.display = 'inline';
+          p.onclick = () => showIntro(i);
+          introList.appendChild(p);
+          if (i < 4) introList.appendChild(document.createElement('br'));
+        }
+        isIntroDetailShown = false;
+        document.querySelector('.image-box img').src = './images/a.png';
+      } else {
+        playClickSound();
+      }
+    }
+
+    const canvas = document.getElementById('snow-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    let lastX = 0, lastY = 0;
+
+    document.addEventListener('mousemove', e => {
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist > 10 && Math.random() < 0.4) {
+        particles.push({
+          x: e.clientX + (Math.random() * 8 - 4),
+          y: e.clientY + (Math.random() * 8 - 4),
+          size: 6,
+          alpha: 1,
+          speedY: Math.random() * 0.5 + 0.5,
+          blinkTimer: 0,
+          stage: 0
+        });
+        lastX = e.clientX;
+        lastY = e.clientY;
+      }
+    });
+
+    function drawPlus(x, y, size, alpha) {
+      ctx.save();
+      ctx.strokeStyle = `rgba(217, 41, 205, ${alpha})`;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(x - size/2, y);
+      ctx.lineTo(x + size/2, y);
+      ctx.moveTo(x, y - size/2);
+      ctx.lineTo(x, y + size/2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawDot(x, y, size, alpha) {
+      ctx.save();
+      ctx.fillStyle = `rgba(217, 41, 205, ${alpha})`;
+      ctx.beginPath();
+      ctx.arc(x, y, size/2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p, i) => {
+        p.y += p.speedY;
+
+        if (p.stage === 0) {
+          p.blinkTimer += 16.67;
+          drawPlus(p.x, p.y, p.size, p.alpha);
+          if (p.blinkTimer >= 1500) {
+            p.stage = 1;
+            p.blinkTimer = 0;
+          }
+        } else if (p.stage === 1) {
+          p.blinkTimer += 16.67;
+          if (Math.floor(p.blinkTimer / 500) % 2 === 0) {
+            drawPlus(p.x, p.y, p.size, p.alpha);
+          } else {
+            drawDot(p.x, p.y, p.size * 0.5, p.alpha);
+          }
+          if (p.blinkTimer >= 4000) {
+            p.stage = 2;
+            p.blinkTimer = 0;
+          }
+        } else if (p.stage === 2) {
+          drawDot(p.x, p.y, p.size * 0.5, p.alpha);
+          p.alpha -= 0.02;
+          if (p.alpha <= 0) {
+            p.stage = 3;
+          }
+        } else if (p.stage === 3) {
+          particles.splice(i, 1);
+          return;
+        }
+      });
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+  </script>
 </body>
 </html>
