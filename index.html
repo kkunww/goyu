@@ -89,6 +89,20 @@
       font-weight: bold;
     }
 
+    /* 추가스타일 */
+    .intro-list p.detail-text {
+      background-color: transparent !important;
+      font-weight: normal !important;
+      cursor: pointer;
+      transition: none !important;
+    }
+
+    .intro-list p.detail-text:hover {
+      background-color: transparent !important;
+      font-weight: normal !important;
+      color: #fafafa;
+    }
+
     .extra-intro {
       margin-bottom: 30px;
       cursor: pointer;
@@ -152,19 +166,6 @@
       pointer-events: none;
       z-index: 1;
     }
-
-    /* hover 효과 x */
-    .no-hover-effect {
-      background-color: transparent !important;
-      font-weight: normal !important;
-      cursor: default !important;
-      pointer-events: none;
-    }
-    .no-hover-effect:hover {
-      background-color: transparent !important;
-      font-weight: normal !important;
-      color: inherit !important;
-    }
   </style>
 </head>
 <body onclick="handleBodyClick()">
@@ -214,7 +215,7 @@
     };
 
     const introDetailTexts = {
-      1: ['아일릿 원희 +@ 여자연예인', '이안, 유스피어 로아', 'ARIANAGRANDE olivia rodrigo taylor swift', 'wicked: glinda, elphaba'],
+      1: ['아일릿 원희 +@ 여자연예인', '이안, 유스피어 로아 ', 'ARIANAGRANDE olivia rodrigo taylor swift', 'wicked: glinda, elphaba'],
       2: ['31198902', '제5인격 언급 多', '의지 등 커스텀 게임 위주', '+ 단간론파, 스듀, 마크, 리썰 등'],
       3: ['supernatural', 'https://youtu.be/hKwizc5nsWY?si=Mwiz7-p1Z3BzaxXG', 'Die For You', 'https://youtu.be/YQ-qToZUybM?si=kTgu-iQtzZ1gFjVZ'],
       4: ['x', '여돌 까글', '남트친 남자 야구주력', ' ']
@@ -231,7 +232,7 @@
         const p = document.createElement('p');
         p.innerText = text;
         p.style.display = 'inline';
-        p.classList.add('no-hover-effect');  // hover 효과 없애는 클래스 추가
+        p.classList.add('detail-text');  // 여기에 클래스 추가
         p.onclick = handleBodyClick;
         introList.appendChild(p);
 
