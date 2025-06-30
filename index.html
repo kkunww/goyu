@@ -152,19 +152,32 @@
       pointer-events: none;
       z-index: 1;
     }
+
+    /* hover 효과 없애는 클래스 */
+    .no-hover-effect {
+      background-color: transparent !important;
+      font-weight: normal !important;
+      cursor: default !important;
+      pointer-events: none;
+    }
+    .no-hover-effect:hover {
+      background-color: transparent !important;
+      font-weight: normal !important;
+      color: inherit !important;
+    }
   </style>
 </head>
 <body onclick="handleBodyClick()">
   <canvas id="snow-canvas"></canvas>
   <div class="content-container" onclick="event.stopPropagation()">
     <div class="top-numbers">
-      <span onclick="playClickSound()">✖</span>
-      <span onclick="playClickSound()">✖</span>
-      <span onclick="playClickSound()">✖</span>
+      <span onclick="playClickSound()">×</span>
+      <span onclick="playClickSound()">×</span>
+      <span onclick="playClickSound()">×</span>
       <span onclick="playClickSound()">= ω =</span>
     </div>
     <div class="intro-single">
-      뜬금없지만여러분태어나줘서고마워요
+      고유냥이
     </div>
     <div class="intro-list" id="intro-list">
       <p id="p1" onclick="showIntro(1)">Cherish (my Love)</p><br />
@@ -218,6 +231,7 @@
         const p = document.createElement('p');
         p.innerText = text;
         p.style.display = 'inline';
+        p.classList.add('no-hover-effect');  // hover 효과 없애는 클래스 추가
         p.onclick = handleBodyClick;
         introList.appendChild(p);
 
